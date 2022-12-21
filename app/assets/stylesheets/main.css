@@ -1,0 +1,12 @@
+.col {
+    white-space: nowrap;
+}
+select {
+    width:80%;
+}
+.width-30{
+    width: 30% !important;
+}
+.width-67 {
+    width: 67% !important;
+}
