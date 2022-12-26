@@ -1,4 +1,6 @@
 class Item < ApplicationRecord
-	has_many :customer_items, dependent: :destroy
-	has_many :customer, through: :customer_items
+	belongs_to :customer
+	belongs_to :refer_source, optional: true
+	enum status: [:at_shop, :repairing, :repaired, :delivered ]
+	validates :name, :model, :brand,:iemi, presence: true
 end

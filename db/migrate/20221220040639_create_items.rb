@@ -5,6 +5,7 @@ class CreateItems < ActiveRecord::Migration[5.2]
       t.string :model
       t.string :brand
       t.string :iemi
+      t.references :customer, foreign_key: true, null: true
 
       t.timestamps
     end

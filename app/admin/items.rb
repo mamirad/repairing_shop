@@ -14,5 +14,12 @@ ActiveAdmin.register Item do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+  collection_action :track, method: :get
   
+  controller do
+    def track
+      @item = Item.find(params[:id])
+      redirect_to admin_item_path(@item)
+    end
+  end
 end

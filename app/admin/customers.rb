@@ -5,7 +5,7 @@ ActiveAdmin.register Customer do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :name, :email, :phone, :city, :address, :cnic_no
+  permit_params :name, :email, :phone, :city, :address, :cnic_no, items_attributes: [:name, :model, :brand, :iemi]
   filter :name
   filter :email
   filter :phone
@@ -27,31 +27,31 @@ ActiveAdmin.register Customer do
 
       column class: 'column width-67' do
         panel "#{customer.name}'s Items" do
-          table_for customer.customer_items.includes(:item) do
-            column :name do |customer_item|
-              customer_item.item.name
+          table_for customer.items do
+            column :name do |item|
+              item.name
             end
 
-            column :model do |customer_item|
-              customer_item.item.model
+            column :model do |item|
+              item.model
             end
 
-            column :brand do |customer_item|
-              customer_item.item.brand
+            column :brand do |item|
+              item.brand
             end
 
-            column :iemi do |customer_item|
-              customer_item.item.iemi
+            column :iemi do |item|
+              item.iemi
             end
 
-            column :status do |customer_item|
-              customer_item.status.humanize
+            column :status do |item|
+              item.status.humanize
             end
 
-            column :action do |customer_item|
-              span link_to 'view', admin_item_path(customer_item.item.id), class: 'btn btn-xs btn-default'
-              span link_to 'edit', edit_admin_item_path(customer_item.item.id)
-              span link_to 'delete', admin_item_path(customer_item.item.id), method: :delete, :data => { :confirm => 'Are you sure?' }
+            column :action do |item|
+              span link_to 'view', admin_item_path(item.id), class: 'btn btn-xs btn-default'
+              span link_to 'edit', edit_admin_item_path(item.id)
+              span link_to 'delete', admin_item_path(item.id), method: :delete, :data => { :confirm => 'Are you sure?' }
             end
           end
         end
@@ -69,6 +69,10 @@ ActiveAdmin.register Customer do
   # end
 
   controller do
+    def new
+      @customer = Customer.new
+      @customer.items.build
+    end
   end
   #
   # or
@@ -78,5 +82,25 @@ ActiveAdmin.register Customer do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+  form do |f|
+    f.inputs do
+      f.input :name
+      f.input :email
+      f.input :phone
+      f.input :city
+      f.input :address
+      f.input :cnic_no
+    end
+    f.inputs do
+      f.has_many :items, heading: 'Item', allow_destroy: true, new_record: true do |item|
+        item.input :name
+        item.input :model
+        item.input :brand
+        item.input :iemi
+
+      end
+    end
+    f.actions
+  end
   
 end
