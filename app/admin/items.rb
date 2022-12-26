@@ -18,8 +18,12 @@ ActiveAdmin.register Item do
   
   controller do
     def track
-      @item = Item.find(params[:id])
-      redirect_to admin_item_path(@item)
+      @item = Item.find_by(id: params[:id])
+      if @item.present?
+        redirect_to admin_item_path(@item)
+      else
+        redirect_to '/admin', alert: 'No Record found with this tracking ID'
+      end
     end
   end
 end
