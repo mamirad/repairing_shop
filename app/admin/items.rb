@@ -5,7 +5,7 @@ ActiveAdmin.register Item do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :name, :model, :brand, :iemi, :issue
+  permit_params :name, :model, :brand, :iemi, :issue, :status
   #
   # or
   #
