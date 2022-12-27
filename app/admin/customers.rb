@@ -5,7 +5,7 @@ ActiveAdmin.register Customer do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :name, :email, :phone, :city, :address, :cnic_no, items_attributes: [:name, :model, :brand, :iemi]
+  permit_params :name, :email, :phone, :city, :address, :cnic_no, items_attributes: [:name, :model, :brand, :iemi, :issue]
   filter :name
   filter :email
   filter :phone
@@ -109,6 +109,7 @@ ActiveAdmin.register Customer do
         item.input :model
         item.input :brand
         item.input :iemi
+        item.input :issue
 
       end
     end
