@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Receipt example</title>
+    <style type="text/css">
+      * {
+        font-size: 12px;
+        font-family: 'Times New Roman';
+      }
+
+      td,
+      th,
+      tr,
+      table {
+          border-top: 1px solid black;
+          border-collapse: collapse;
+      }
+
+      td.description,
+      th.description {
+          width: 100px;
+          max-width: 75px;
+      }
+
+      td.quantity,
+      th.quantity {
+          width: 60px;
+          max-width: 60px;
+          word-break: break-all;
+      }
+
+      td.price,
+      th.price {
+          width: 60px;
+          max-width: 60px;
+          word-break: break-all;
+      }
+
+      .centered {
+          text-align: center;
+          align-content: center;
+      }
+
+      .ticket {
+          width: 155px;
+          max-width: 155px;
+      }
+
+      img {
+          max-width: inherit;
+          width: inherit;
+      }
+
+      @media print {
+        .hidden-print,
+        .hidden-print * {
+            display: none !important;
+        }
+      }
+    </style>
+  </head>
+    <body>
+      <%@items.each do |item|%>
+        <div class="ticket">
+            <!-- <img src="./logo.png" alt="Logo"> -->
+            <p class="centered">Shop Name HERE
+
+              <br>
+              <%=Time.now.strftime('%d %b %Y %H:%M')%>
+               
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                      <th colspan="2">Tracking ID <%=item.id%></th>
+                    </tr>
+                    <tr>
+                      <th colspan="2">Customer ID <%=item.customer.id%></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="quantity">Cus : </td>
+                        <td class="description"><%=item.customer.name%></td>
+                    </tr>
+                    <tr>
+                        <td class="quantity">Item : </td>
+                        <td class="description"><%=item.name%></td>
+                    </tr>
+                    <tr>
+                        <td class="quantity">status : </td>
+                        <td class="description"><%=item.status.humanize%></td>
+                    </tr>
+                    <tr>
+                        <td class="quantity">Issue : </td>
+                        <td class="description"><%=item.issue%></td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <p class="centered">Thanks for your !
+                <br></p>
+        </div>
+      <%end%>  
+    </body>
+</html>

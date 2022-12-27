@@ -16,7 +16,9 @@ ActiveAdmin.register Customer do
     column :email
     column :phone
 
-    actions
+    actions do |customer|
+      link_to 'Receipt', receipt_admin_customer_path(customer.id, format: :pdf)
+    end
   end
 
   show do
@@ -67,11 +69,21 @@ ActiveAdmin.register Customer do
   #     # row('Published?') { |b| status_tag b.published? }
   #   end
   # end
-
+  member_action :receipt, method: :get
   controller do
     def new
       @customer = Customer.new
       @customer.items.build
+    end
+
+    def receipt
+      @customer = Customer.find(params[:id])
+      @items = Customer.find(params[:id]).items
+      respond_to do |format|
+        format.pdf do
+          render :pdf => "receipt for #{@customer.name}"
+        end
+      end
     end
   end
   #
