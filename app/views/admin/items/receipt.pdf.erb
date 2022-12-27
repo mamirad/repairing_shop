@@ -75,25 +75,25 @@
             <table>
                 <thead>
                     <tr>
-                      <th colspan="2">Tracking ID <%=@customer_item.id%></th>
+                      <th colspan="2">Tracking ID <%=@item.id%></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td class="quantity">Cus : </td>
-                        <td class="description"><%=@customer_item.customer.name%></td>
+                        <td class="description"><%=@item.customer.name%></td>
                     </tr>
                     <tr>
                         <td class="quantity">Item : </td>
-                        <td class="description"><%=@customer_item.item.name%></td>
+                        <td class="description"><%=@item.name%></td>
                     </tr>
                     <tr>
                         <td class="quantity">status : </td>
-                        <td class="description"><%=@customer_item.status.humanize%></td>
+                        <td class="description"><%=@item.status.humanize%></td>
                     </tr>
                     <tr>
                         <td class="quantity">Issue : </td>
-                        <td class="description"><%=@customer_item.issue_details%></td>
+                        <td class="description"><%=@item.issue%></td>
                     </tr>
                     
                 </tbody>

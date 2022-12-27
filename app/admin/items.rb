@@ -5,7 +5,7 @@ ActiveAdmin.register Item do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :name, :model, :brand, :iemi
+  permit_params :name, :model, :brand, :iemi, :issue
   #
   # or
   #
@@ -15,6 +15,7 @@ ActiveAdmin.register Item do
   #   permitted
   # end
   collection_action :track, method: :get
+  member_action :receipt, method: :get
   
   controller do
     def track
@@ -24,6 +25,34 @@ ActiveAdmin.register Item do
       else
         redirect_to '/admin', alert: 'No Record found with this tracking ID'
       end
+    end
+
+    def receipt
+      @item = Item.find(params[:id])
+      respond_to do |format|
+        format.pdf do
+          render :pdf => "receipt for #{@item.name}"
+        end
+      end
+    end
+  end
+
+  index do
+    selectable_column
+    id_column
+    column :customer
+    column :name
+    column :status do |item|
+      item.status.humanize
+    end
+    column :model
+    column :brand
+    column :iemi
+    column :issue
+    column :refer_source
+
+    actions do |item|
+      link_to 'Receipt', receipt_admin_item_path(item.id, format: :pdf)
     end
   end
 end
